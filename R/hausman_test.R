@@ -19,10 +19,13 @@ hausman_test <- function(coef_marginal, coef_condition, var_marginal, var_condit
   degree = length(x = coef_marginal)
   # estimate statistics
   statistic = t(x = coef_marginal - coef_condition) %*% MASS::ginv(X = var_condition - var_marginal) %*% (coef_marginal - coef_condition)
+  statistic = as.vector(x = statistic)
   # calculate p-value
   p_value = pchisq(q = statistic, df = degree, lower.tail = FALSE)
   
-  return( p_value )
+  # return as list
+  result = list( statistic = statistic, p_value = p_value )
+  return( result )
 }
 
 
@@ -43,17 +46,22 @@ model_fit <- function(formula_marginal, formula_condition, data){
   formula_condition = as.formula(object = formula_condition)
   
   # marginal MLE
-  fit_marginal  = lme4::glmer(formula = formula_marginal, data = data, family = binomial(link = "logit"))
-  coef_marginal = summary(object = fit_marginal)$coefficients[-1, 1]          # except intercept
-  var_marginal  = as.matrix(x = summary(object = fit_marginal)$vcov)[-1, -1]  # except intercept 
+  fit_marginal  = lme4::glmer(  formula = formula_marginal
+                              , data = data
+                              , family = binomial(link = "logit")
+                              , control = glmerControl(optimizer = "bobyqa"))
+  coef_marginal = summary(object = fit_marginal)$coefficients[, 1]    # except intercept
+  var_marginal  = as.matrix(x = summary(object = fit_marginal)$vcov)  # except intercept 
 
   # conditional MLE
   library(survival)
-  fit_condition  = survival::clogit(formula_condition, data = data)
+  fit_condition  = survival::clogit(  formula = formula_condition
+                                    , data = data
+                                    , na.action = na.omit)
   coef_condition = coef(object = fit_condition)
   var_condition  = fit_condition$var
-  rownames(x = var_condition) = rownames(x = var_marginal)
-  colnames(x = var_condition) = colnames(x = var_marginal)
+  rownames(x = var_condition) = names(x = coef_condition)
+  colnames(x = var_condition) = names(x = coef_condition)
   
   # return as list type
   result = list(  coef_marginal = coef_marginal, coef_condition = coef_condition
