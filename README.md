@@ -5,9 +5,9 @@ Hausman test is a statistical test in econometrics.
 Consider the linear model ![](https://latex.codecogs.com/svg.latex?\mathbf{%20y_{it}=\alpha+\beta^{T}X_{it}+u_{it}%20}) and ![](https://latex.codecogs.com/svg.latex?\mathbf{%20u_{it}=\mu_{i}+v_{it}%20}). ![](https://latex.codecogs.com/svg.latex?\mathbf{v}) is error term and ![](http://latex.codecogs.com/svg.latex?\mathbf{\mu}) is random effect. In this situation, two assumptions are possible. One is that ![](https://latex.codecogs.com/svg.latex?\mathbf{\mu_{i}}) is uncorrelated with ![](https://latex.codecogs.com/svg.latex?\mathbf{X_{it}}) and another assumption is that ![](https://latex.codecogs.com/svg.latex?\mathbf{\mu_{i}}) is allowed to correlated with ![](https://latex.codecogs.com/svg.latex?\mathbf{X_{it}}). Hausman test tests whether ![](https://latex.codecogs.com/svg.latex?\mathbf{\mu_{i}}) and ![](https://latex.codecogs.com/svg.latex?\mathbf{X_{it}}) are correlated or not.
 
 ### Hypothesis
-![](https://latex.codecogs.com/svg.latex?\mathbf{H_{0}}): Covariates and random effects are uncorrelated, ![](https://latex.codecogs.com/svg.latex?\mathbf{cov(\mu_{i},%20x_{it})%20=%200})
+![](https://latex.codecogs.com/svg.latex?\mathbf{H_{0}}): Covariates and random effects are uncorrelated
 
-![](https://latex.codecogs.com/svg.latex?\mathbf{H_{1}}): Covariates and random effects are correlated, ![](https://latex.codecogs.com/svg.latex?\mathbf{cov(\mu_{i},%20x_{it})%20\neq%200})
+![](https://latex.codecogs.com/svg.latex?\mathbf{H_{1}}): Covariates and random effects are correlated
 
 ### Hausman statistic
 ![](https://latex.codecogs.com/svg.latex?\mathbf{H%20=%20(b_{1}-b_{0})^{%27}%20(%20Var(b_{0})-Var(b_{1}))^{+}%20%20(b_{1}-b_{0})}) where ![](https://latex.codecogs.com/svg.latex?\mathbf{^{+}}) denotes the [Moore-Penrose pseudoinverse](https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse).
