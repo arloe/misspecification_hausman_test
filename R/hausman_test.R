@@ -49,7 +49,7 @@ model_fit <- function(formula_marginal, formula_condition, data){
   fit_marginal  = lme4::glmer(  formula = formula_marginal
                               , data = data
                               , family = binomial(link = "logit")
-                              , control = glmerControl(optimizer = "bobyqa"))
+                              , control = lme4::glmerControl(optimizer = "bobyqa"))
   coef_marginal = summary(object = fit_marginal)$coefficients[, 1]    # except intercept
   var_marginal  = as.matrix(x = summary(object = fit_marginal)$vcov)  # except intercept 
 
